@@ -58,14 +58,12 @@ public class UmsVerifyController {
     }
     @RequestMapping(value = "/list/{verifyType}",method = RequestMethod.GET)
     public ApiResult<List<UmsVerify>> list(
-
             @RequestHeader(value = JwtUtil.USER_NAME ) String userName,
-            @PathVariable("verifyType") String verifyType){
-
-        LambdaQueryWrapper<UmsVerify> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.eq(UmsVerify::getVerifyType,verifyType);
-        List<UmsVerify> verifys = umsVerifyService.list(queryWrapper);
-        return ApiResult.success(verifys);
+            @PathVariable("verifyType") String verifyType ){
+        UmsUser leader = umsUserService.getUserByUsername(userName);
+        List<UmsVerify> umsVerifies = umsVerifyService.getByTypeAndLeader(verifyType, leader);
+        
+        return ApiResult.success(umsVerifies);
     }
 
     @RequestMapping(value = "/shenhe",method = RequestMethod.POST)

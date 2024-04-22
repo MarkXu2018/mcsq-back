@@ -55,6 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         protectedPaths.add("/verify/list/*");
         protectedPaths.add("/book/add");
         protectedPaths.add("/book/listme");
+        protectedPaths.add("/book/list");
         protectedPaths.add("/post/create");
         protectedPaths.add("/post/update");
         protectedPaths.add("/post/delete/*");
@@ -78,6 +79,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         protectedPaths.add("/verify/update");
         protectedPaths.add("/verify/list/*");
         protectedPaths.add("/verify/shenhe");
+        protectedPaths.add("/book/list");
         boolean bFind = false;
         for( String passedPath : protectedPaths ) {
             bFind = pathMatcher.match(passedPath, request.getServletPath());

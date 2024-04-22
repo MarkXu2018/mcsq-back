@@ -6,4 +6,11 @@
         FROM book
         WHERE uid = #{uid} AND book_time BETWEEN #{startDate} AND #{endDate}
     </select>
+
+    <select id="getByLeader" resultType="com.mc.mcsq.model.entity.Book">
+        SELECT book.*
+        FROM book
+                 INNER JOIN ums_dept ON book.community = ums_dept.dept_name
+        WHERE ums_dept.leader = #{leaderId};
+    </select>
 </mapper>

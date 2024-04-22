@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mc.mcsq.mapper.UmsVerifyMapper">
+    <select id="getByTypeAndLeader" resultType="com.mc.mcsq.model.entity.UmsVerify">
+        SELECT ums_verify.*
+        FROM ums_verify
+                 INNER JOIN ums_dept ON ums_verify.community = ums_dept.dept_name
+        WHERE ums_verify.verify_type = #{verifyType}
+          AND ums_dept.leader = #{leaderId};
+    </select>
+</mapper>

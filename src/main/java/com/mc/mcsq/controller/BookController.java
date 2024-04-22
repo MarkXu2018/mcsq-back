@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.mc.mcsq.common.api.ApiResult;
+import com.mc.mcsq.jwt.JwtUtil;
 import com.mc.mcsq.model.entity.Book;
 import com.mc.mcsq.model.entity.UmsUser;
 import com.mc.mcsq.model.vo.BookVO;
@@ -65,9 +66,10 @@ public class BookController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ApiResult<List<BookVO>> getList(){
-
-        List<Book> books = bookService.list();
+    public ApiResult<List<BookVO>> getList(
+            @RequestHeader(value = JwtUtil.USER_NAME ) String userName){
+        UmsUser leader = umsUserService.getUserByUsername(userName);
+        List<Book> books = bookService.getByLeader(leader);//按照管理的部门进行划分，只管理本部门的数据
         List<BookVO> bookVOS=books.stream().map(
                 book -> {
                     BookVO bookVO=new BookVO();
